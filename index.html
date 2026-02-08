@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Cycle Sync Planner</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="top-bar">
+        <button class="menu-btn" onclick="toggleMenu()">☰</button>
+        <div class="app-title"><span id="userName">Cycle Sync</span></div>
+        <div class="settings-btn" style="cursor:default">🌸</div>
+    </div>
+
+    <div id="slideMenu" class="slide-menu">
+        <div class="slide-menu-header">
+            <h2>Menu</h2>
+            <button onclick="toggleMenu()">&times;</button>
+        </div>
+        <button class="menu-item" onclick="showCalendar()">📅 Cycle Calendar</button>
+        <button class="menu-item" onclick="showTemplateBuilder()">📝 Template Builder</button>
+        <button class="menu-item" onclick="showSettings()">⚙️ Settings</button>
+    </div>
+
+    <div class="main-content">
+        <div class="phase-card">
+            <div id="phaseDisplay">
+                <div class="phase-name">Welcome!</div>
+                <div class="phase-day">Set up in Settings ⚙️</div>
+            </div>
+        </div>
+
+        <!-- FOOD VIEW -->
+        <div id="foodView" class="category-view">
+            <h2>🍽️ Food & Nutrition</h2>
+            <div class="focus-section">
+                <h3>Today's Nutrition Focus</h3>
+                <div id="foodFocus" class="focus-text"></div>
+            </div>
+            <div class="reminders-section">
+                <h3>Macros Priority</h3>
+                <div class="food-checklist">
+                    <div class="food-item">
+                        <span class="food-label">Proteins</span>
+                        <div class="stars" id="proteinStars"></div>
+                    </div>
+                    <div class="food-item">
+                        <span class="food-label">Carbs</span>
+                        <div class="stars" id="carbsStars"></div>
+                    </div>
+                    <div class="food-item">
+                        <span class="food-label">Fats</span>
+                        <div class="stars" id="fatsStars"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="daily-section">
+                <h3>Today's Meals</h3>
+                <div id="foodItems" class="items-list"></div>
+            </div>
+        </div>
+
+        <!-- EXERCISE VIEW -->
+        <div id="exerciseView" class="category-view" style="display:none;">
+            <h2>💪 Exercise & Fitness</h2>
+            <div class="focus-section">
+                <h3>Today's Workout Focus</h3>
+                <div id="exerciseFocus" class="focus-text"></div>
+            </div>
+            <div class="daily-section">
+                <h3>Today's Workout Steps</h3>
+                <div id="exerciseItems" class="items-list"></div>
+            </div>
+        </div>
+
+        <!-- WORK VIEW -->
+        <div id="workView" class="category-view" style="display:none;">
+            <h2>💼 Work & Projects</h2>
+            <div class="focus-section">
+                <h3>Today's Work Focus</h3>
+                <div id="workFocus" class="focus-text"></div>
+            </div>
+            <div class="daily-section">
+                <h3>Today's Work Tasks</h3>
+                <div id="workItems" class="items-list"></div>
+            </div>
+        </div>
+
+        <!-- STUDY VIEW -->
+        <div id="studyView" class="category-view" style="display:none;">
+            <h2>📚 Study & Learning</h2>
+            <div class="focus-section">
+                <h3>Today's Study Focus</h3>
+                <div id="studyFocus" class="focus-text"></div>
+            </div>
+            <div class="daily-section">
+                <h3>Today's Study Steps</h3>
+                <div id="studyItems" class="items-list"></div>
+            </div>
+        </div>
+
+        <!-- PERSONAL VIEW -->
+        <div id="personalView" class="category-view" style="display:none;">
+            <h2>🏠 Personal & Household</h2>
+            <div class="focus-section">
+                <h3>Today's Personal Focus</h3>
+                <div id="personalFocus" class="focus-text"></div>
+            </div>
+            <div class="daily-section">
+                <h3>Today's Personal Tasks</h3>
+                <div id="personalItems" class="items-list"></div>
+            </div>
+        </div>
+
+        <!-- CALENDAR VIEW -->
+        <div id="calendarView" class="category-view" style="display:none;">
+            <h2>📅 Cycle Calendar</h2>
+            <div id="calendarContent"></div>
+        </div>
+
+        <!-- TEMPLATE BUILDER -->
+        <div id="templateView" class="category-view" style="display:none;">
+            <h2>📝 Template Builder</h2>
+            <div class="template-category-selector">
+                <button class="template-cat-btn active" onclick="switchTemplateCategory('food')">🍽️</button>
+                <button class="template-cat-btn" onclick="switchTemplateCategory('exercise')">💪</button>
+                <button class="template-cat-btn" onclick="switchTemplateCategory('work')">💼</button>
+                <button class="template-cat-btn" onclick="switchTemplateCategory('study')">📚</button>
+                <button class="template-cat-btn" onclick="switchTemplateCategory('personal')">🏠</button>
+            </div>
+            <div id="templateContent"></div>
+        </div>
+
+        <!-- SETTINGS -->
+        <div id="settingsView" class="category-view" style="display:none;">
+            <h2>⚙️ Settings</h2>
+            <div class="settings-section">
+                <h3>Personal</h3>
+                <label>Your Name</label>
+                <input type="text" id="userNameInput" placeholder="Enter your name">
+            </div>
+            <div class="settings-section">
+                <h3>Theme Color</h3>
+                <div class="color-options">
+                    <div class="color-option" style="background:#FFB3BA" onclick="selectColor('#FFB3BA')" data-color="#FFB3BA">🌸</div>
+                    <div class="color-option" style="background:#BAE1FF" onclick="selectColor('#BAE1FF')" data-color="#BAE1FF">💙</div>
+                    <div class="color-option" style="background:#FFD8B3" onclick="selectColor('#FFD8B3')" data-color="#FFD8B3">🧡</div>
+                    <div class="color-option" style="background:#E0BBE4" onclick="selectColor('#E0BBE4')" data-color="#E0BBE4">💜</div>
+                    <div class="color-option" style="background:#BFFCC6" onclick="selectColor('#BFFCC6')" data-color="#BFFCC6">💚</div>
+                    <div class="color-option" style="background:#FFF4B3" onclick="selectColor('#FFF4B3')" data-color="#FFF4B3">💛</div>
+                    <div class="color-option" style="background:#FFDFD3" onclick="selectColor('#FFDFD3')" data-color="#FFDFD3">🧡</div>
+                    <div class="color-option" style="background:#D4F1F4" onclick="selectColor('#D4F1F4')" data-color="#D4F1F4">🩵</div>
+                </div>
+            </div>
+            <div class="settings-section">
+                <h3>Cycle Settings</h3>
+                <label>Day 1 of Current Cycle</label>
+                <input type="date" id="day1Input">
+                <label>Menstrual Phase Length (days)</label>
+                <input type="number" id="menstrualEndInput" placeholder="5" min="1" max="10">
+                <label>Total Cycle Length (days)</label>
+                <input type="number" id="cycleLengthInput" placeholder="28" min="21" max="40">
+                <button class="btn-end-menstrual" id="endMenstrualBtn" style="display:none" onclick="endMenstrualPhase()">🔴 End Menstrual Phase Today</button>
+            </div>
+            <button class="btn-primary" onclick="saveSettings()">Save Settings</button>
+        </div>
+    </div>
+
+    <div class="bottom-nav">
+        <button class="nav-item active" onclick="switchCategory('food')">
+            <span class="nav-icon">🍽️</span><span class="nav-label">Food</span>
+        </button>
+        <button class="nav-item" onclick="switchCategory('exercise')">
+            <span class="nav-icon">💪</span><span class="nav-label">Exercise</span>
+        </button>
+        <button class="nav-item" onclick="switchCategory('work')">
+            <span class="nav-icon">💼</span><span class="nav-label">Work</span>
+        </button>
+        <button class="nav-item" onclick="switchCategory('study')">
+            <span class="nav-icon">📚</span><span class="nav-label">Study</span>
+        </button>
+        <button class="nav-item" onclick="switchCategory('personal')">
+            <span class="nav-icon">🏠</span><span class="nav-label">Personal</span>
+        </button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
